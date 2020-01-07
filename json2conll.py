@@ -116,10 +116,10 @@ for directory in os.listdir(cadec_folds):
     json_to_conll(train_cadec,os.path.join(fold_path_cadec, "train.conll"), entity_type)
     test_cadec = os.path.join(fold_path_cadec, "test.json")
     json_to_conll(test_cadec, os.path.join(fold_path_cadec, "test.conll"), entity_type)
-
-    fold_path_psytar = os.path.join(psytar_folds, directory)
-    train_psytar = os.path.join(fold_path_psytar, "train.json")
-    json_to_conll(train_psytar, os.path.join(fold_path_psytar, "train.conll"), entity_type)
-    test_psytar = os.path.join(fold_path_psytar, "test.json")
-    json_to_conll(test_psytar, os.path.join(fold_path_psytar, "test.conll"), entity_type)
+    if args.psytar != 'None':
+        fold_path_psytar = os.path.join(psytar_folds, directory)
+        train_psytar = os.path.join(fold_path_psytar, "train.json")
+        json_to_conll(train_psytar, os.path.join(fold_path_psytar, "train.conll"), entity_type)
+        test_psytar = os.path.join(fold_path_psytar, "test.json")
+        json_to_conll(test_psytar, os.path.join(fold_path_psytar, "test.conll"), entity_type)
 

@@ -80,7 +80,7 @@ python3 output_working.py -data ${psytararr[$i]}/test.json \
 -entity "ADR" \
 -brat_folder /tmp/bioner/cadec_fold_0${i}_psytar_test/brat_output
 done
-for (( i=0; i < "${#cadecarr[@]}"; i++ ))
+for (( i=0; i < "${#psytararr[@]}"; i++ ))
 do
 mkdir "/tmp/bioner/psytar_fold_0${i}_cadec_test"
 outputdir=/tmp/bioner/psytar_fold_0${i}_cadec_test
