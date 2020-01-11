@@ -159,7 +159,8 @@ for key in text:
 rkf = KFold(n_splits=n_folds)
 
 n_fold = 0
-os.mkdir(folds_path)
+if not os.path.exists(folds_path):
+    os.mkdir(folds_path)
 for i_train, i_test in rkf.split(df):
     os.mkdir(os.path.join(folds_path,str(n_fold // 10) + str(n_fold)))
     fold_path = os.path.join(folds_path,str(n_fold // 10) + str(n_fold))
