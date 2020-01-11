@@ -39,7 +39,7 @@ outputdir=${TMP_DIR}/cadec_fold_0${i}_cadec_test
 python3 run_ner.py --do_train=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
     --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
     --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
-    --num_train_epochs=10.0 \
+    --num_train_epochs=50.0 \
     --data_dir="${cadecarr[$i]}" \
     --output_dir=$outputdir
 cp ${TMP_DIR}/cadec_fold_0${i}_cadec_test -R /${TMP_DIR}/cadec_fold_0${i}_psytar_test
@@ -47,13 +47,13 @@ outputdir1=/${TMP_DIR}/cadec_fold_0${i}_psytar_test
 python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
     --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
     --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
-    --num_train_epochs=10.0 \
+    --num_train_epochs=50.0 \
     --data_dir="${cadecarr[$i]}" \
     --output_dir=$outputdir
 python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
     --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
     --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
-    --num_train_epochs=10.0 \
+    --num_train_epochs=50.0 \
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir1
 python3 biocodes_detok.py \
@@ -86,7 +86,7 @@ outputdir=${TMP_DIR}/psytar_fold_0${i}_cadec_test
 python3 run_ner.py --do_train=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
     --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
     --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
-    --num_train_epochs=10.0 \
+    --num_train_epochs=50.0 \
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir
 cp ${TMP_DIR}/psytar_fold_0${i}_cadec_test -R ${TMP_DIR}/psytar_fold_0${i}_psytar_test
@@ -94,13 +94,13 @@ outputdir1=${TMP_DIR}/psytar_fold_0${i}_psytar_test
 python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
     --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
     --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
-    --num_train_epochs=10.0 \
+    --num_train_epochs=50.0 \
     --data_dir="${cadecarr[$i]}" \
     --output_dir=$outputdir
 python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
     --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
     --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
-    --num_train_epochs=10.0 \
+    --num_train_epochs=50.0 \
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir1
 python3 biocodes_detok.py \
