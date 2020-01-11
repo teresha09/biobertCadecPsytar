@@ -39,7 +39,8 @@ os.mkdir(psytar_folds_IOB)
 for directory in os.listdir(cadec_folds):
     fold_path_cadec = os.path.join(cadec_folds, directory)
     fold_path_cadec_IOB = os.path.join(cadec_folds_IOB,directory)
-    os.mkdir(fold_path_cadec_IOB)
+    if not os.path.exists(fold_path_cadec_IOB):
+        os.mkdir(fold_path_cadec_IOB)
     train_cadec = os.path.join(fold_path_cadec, "train.conll")
     train_cadec_IOB = os.path.join(fold_path_cadec_IOB, "train.tsv")
     to_IOB_format(train_cadec, train_cadec_IOB)
@@ -51,7 +52,8 @@ for directory in os.listdir(cadec_folds):
     if psytar_folds != 'None':
         fold_path_psytar = os.path.join(psytar_folds, directory)
         fold_path_psytar_IOB = os.path.join(psytar_folds_IOB, directory)
-        os.mkdir(fold_path_psytar_IOB)
+        if not os.path.exists(fold_path_psytar_IOB):
+            os.mkdir(fold_path_psytar_IOB)
         train_psytar = os.path.join(fold_path_psytar, "train.conll")
         train_psytar_IOB = os.path.join(fold_path_psytar_IOB, "train.tsv")
         to_IOB_format(train_psytar, train_psytar_IOB)
