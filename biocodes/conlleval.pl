@@ -52,6 +52,7 @@ my $oTag = "O";           # outside tag, default O
 my $raw = 0;              # raw input: add B to every token
 my $recall = 0.0;         # recall score
 my $tokenCounter = 0;     # token counter (ignores sentence breaks)
+my $metrics = "metrics.txt";
 
 my %correctChunk = ();    # number of correctly identified chunks per type
 my %foundCorrect = ();    # number of chunks in corpus per type
@@ -186,13 +187,14 @@ if (not $latex) {
       if ($precision+$recall > 0);
    
    # print overall performance
-   printf "processed $tokenCounter tokens with $foundCorrect phrases; ";
-   printf "found: $foundGuessed phrases; correct: $correctChunk.\n";
+   open(my $fh, '>', $metrics);
+   printf $fh "processed $tokenCounter tokens with $foundCorrect phrases; ";
+   printf $fh "found: $foundGuessed phrases; correct: $correctChunk.\n";
    if ($tokenCounter>0) {
       printf "accuracy: %6.2f%%; ",100*$correctTags/$tokenCounter;
-      printf "precision: %6.2f%%; ",$precision;
-      printf "recall: %6.2f%%; ",$recall;
-      printf "FB1: %6.2f\n",$FB1;
+      printf $fh "precision: %6.2f%%; ",$precision;
+      printf $fh "recall: %6.2f%%; ",$recall;
+      printf $fh "FB1: %6.2f\n",$FB1;
    }
 }
 

@@ -61,6 +61,8 @@ python3 biocodes_detok.py \
 --labels=${outputdir}/label_test.txt \
 --save_to=${outputdir}/NER_result_conll.txt
 perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir}/NER_result_conll.txt
+cp ${SCRIPTPATH}/metrics.txt ${outputdir}/metrics.txt
+rm metrics.txt
 mkdir ${TMP_DIR}/cadec_fold_0${i}_cadec_test/brat_output
 python3 output_working.py -data ${cadecarr[$i]}/test.json \
 -output_data ${outputdir}/NER_result_conll.txt \
@@ -72,6 +74,8 @@ python3 biocodes_detok.py \
 --labels=${outputdir1}/label_test.txt \
 --save_to=${outputdir1}/NER_result_conll.txt
 perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir1}/NER_result_conll.txt
+cp ${SCRIPTPATH}/metrics.txt ${outputdir1}/metrics.txt
+rm metrics.txt
 mkdir ${TMP_DIR}/cadec_fold_0${i}_psytar_test/brat_output
 python3 output_working.py -data ${psytararr[$i]}/test.json \
 -output_data ${outputdir1}/NER_result_conll.txt \
@@ -108,6 +112,8 @@ python3 biocodes_detok.py \
 --labels=${outputdir}/label_test.txt \
 --save_to=${outputdir}/NER_result_conll.txt
 perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir}/NER_result_conll.txt
+cp ${SCRIPTPATH}/metrics.txt ${outputdir}/metrics.txt
+rm metrics.txt
 mkdir ${TMP_DIR}/psytar_fold_0${i}_cadec_test/brat_output
 python3 output_working.py -data ${cadecarr[$i]}/test.json \
 -output_data ${outputdir}/NER_result_conll.txt \
@@ -119,6 +125,8 @@ python3 biocodes_detok.py \
 --labels=${outputdir1}/label_test.txt \
 --save_to=${outputdir1}/NER_result_conll.txt
 perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir1}/NER_result_conll.txt
+cp ${SCRIPTPATH}/metrics.txt ${outputdir1}/metrics.txt
+rm metrics.txt
 mkdir ${TMP_DIR}/psytar_fold_0${i}_psytar_test/brat_output
 python3 output_working.py -data ${psytararr[$i]}/test.json \
 -output_data ${outputdir1}/NER_result_conll.txt \
