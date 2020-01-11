@@ -3,9 +3,9 @@ import os
 import shutil
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--cadec', '-cadec', type=str, default='data/cadec_folds')
-parser.add_argument('--psytar', '-psytar', type=str, default='data/psytar_folds')
-parser.add_argument('--cadecIOB', '-cadecIOB', type=str, default='data/cadec_folds_biobert')
+parser.add_argument('--cadec', '-cadec', type=str, default='data/rus_folds')
+parser.add_argument('--psytar', '-psytar', type=str, default=None)
+parser.add_argument('--cadecIOB', '-cadecIOB', type=str, default='data/rus_folds_biobert')
 parser.add_argument('--psytarIOB', '-psytarIOB', type=str, default='data/psytar_folds_biobert')
 
 
@@ -34,8 +34,11 @@ def to_IOB_format(filename, out_file):
     f.close()
     f1.close()
 
-os.mkdir(cadec_folds_IOB)
-os.mkdir(psytar_folds_IOB)
+
+if not os.path.exists(cadec_folds_IOB):
+    os.mkdir(cadec_folds_IOB)
+if not os.path.exists(psytar_folds_IOB):
+    os.mkdir(psytar_folds_IOB)
 for directory in os.listdir(cadec_folds):
     fold_path_cadec = os.path.join(cadec_folds, directory)
     fold_path_cadec_IOB = os.path.join(cadec_folds_IOB,directory)
@@ -49,7 +52,7 @@ for directory in os.listdir(cadec_folds):
     test_cadec_IOB = os.path.join(fold_path_cadec_IOB, "test.tsv")
     to_IOB_format(test_cadec,test_cadec_IOB)
     shutil.copyfile(test_cadec_IOB,os.path.join(fold_path_cadec_IOB, "devel.tsv"))
-    if psytar_folds != 'None':
+    if psytar_folds is not None:
         fold_path_psytar = os.path.join(psytar_folds, directory)
         fold_path_psytar_IOB = os.path.join(psytar_folds_IOB, directory)
         if not os.path.exists(fold_path_psytar_IOB):

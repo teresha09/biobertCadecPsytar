@@ -6,26 +6,26 @@ from nltk.tokenize import wordpunct_tokenize, sent_tokenize
 from nltk.stem import WordNetLemmatizer
 import nltk
 from nltk.corpus import wordnet
+from nltk import pos_tag
 import argparse
 
 import tokenization
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--cadec', '-cadec', type=str, default='data/cadec_folds')
-parser.add_argument('--psytar', '-psytar', type=str, default='data/psytar_folds')
+parser.add_argument('--cadec', '-cadec', type=str, default='data/rus_folds')
+parser.add_argument('--psytar', '-psytar', type=str, default=None)
 parser.add_argument('--entity', '-entity', type=str, default='adr')
-parser.add_argument('--tagger', '-tagger', type=str, default='taggers/maxent_treebank_pos_tagger/english.pickle')
+parser.add_argument('--tagger', '-tagger', type=str, default='averaged_perceptron_tagger_ru')
 parser.add_argument('--vocab_file', '-vocab_file', type=str, default='BIOBERT_DIR/vocab.txt')
 parser.add_argument('--do_lower_case', '-do_lower_case', type=bool, default=True)
 
 args = parser.parse_args()
-
+nltk.download(args.tagger)
 cadec_folds = args.cadec
 psytar_folds = args.psytar
 entity_type = args.entity
 
 
-tagger = nltk.data.load(args.tagger)
 lemmatizer = WordNetLemmatizer()
 
 
@@ -45,6 +45,8 @@ def get_wordnet_pos(treebank_tag):
 
 def get_token_position_in_text(token, w_start, text):
     delimitter_start = None
+    text = text.replace('й','и')
+    text = text.replace("ё","е")
     while text[w_start:w_start+len(token)] != token or (delimitter_start == None and w_start != 0):
         w_start += 1
         delimitter_start = delimitter_start or w_start
@@ -89,19 +91,19 @@ def json_to_conll(corpus_json_location, output_location, entity_type, by_sent = 
             tokens_counter = 0
             for document in documents:
                 tokens = tokenization.make_token_list(document.split(' '),tokenizer)
-                pos_tags = tagger.tag(tokens)
+                pos_tags = pos_tag(tokens, lang='rus')
                 tokens_counter += len(tokens)
                 for token, temp in zip(tokens, pos_tags):
                     token_corr = temp[0].lower()
-                    pos_tag = temp[1]
+                    pos = temp[1]
                     w_start, w_end, delimitter = get_token_position_in_text(token, w_start, review['text'].lower())
                     bio_tag = get_bio_tag(w_start, w_end, review['entities'], entity_type)
-                    lemm = lemmatizer.lemmatize(token_corr, get_wordnet_pos(pos_tag))
+                    lemm = lemmatizer.lemmatize(token_corr, get_wordnet_pos(pos))
                     if '.' in lemm or '!' in lemm or '?' in lemm:
                         eol = "\n\n"
                     else:
                         eol = "\n"
-                    out_file.write(u'{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}{}'.format(token, lemm, pos_tag, bio_tag, w_start, w_end, delimitter, review['index'], eol))
+                    out_file.write(u'{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}{}'.format(token, lemm, pos, bio_tag, w_start, w_end, delimitter, review['index'], eol))
                     w_start = w_end - 1
             js_data['data'][i]['n_token'] = tokens_counter
             i += 1
@@ -116,7 +118,7 @@ for directory in os.listdir(cadec_folds):
     json_to_conll(train_cadec,os.path.join(fold_path_cadec, "train.conll"), entity_type)
     test_cadec = os.path.join(fold_path_cadec, "test.json")
     json_to_conll(test_cadec, os.path.join(fold_path_cadec, "test.conll"), entity_type)
-    if args.psytar != 'None':
+    if args.psytar is not None:
         fold_path_psytar = os.path.join(psytar_folds, directory)
         train_psytar = os.path.join(fold_path_psytar, "train.json")
         json_to_conll(train_psytar, os.path.join(fold_path_psytar, "train.conll"), entity_type)

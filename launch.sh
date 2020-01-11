@@ -4,7 +4,7 @@ python3 folds_cadec.py -cadec data/cadec -cadec_text data/cadec/text -cadec_orig
 
 python3 folds_psytar.py -psytar data/psytar_folds -psytar_text data/Copy_of_PsyTAR_dataset.csv -psytar_adr data/Copy_of_PsyTAR_dataset_adr.csv -psytar_disease data/Copy_of_PsyTAR_dataset_disease.csv -psytar_symptoms data/Copy_of_PsyTAR_dataset_symptoms.csv -folds 5
 
-python3 json2conll.py -cadec data/cadec_folds -psytar data/psytar_folds -entity adr -tagger taggers/maxent_treebank_pos_tagger/english.pickle
+python3 json2conll.py -cadec data/cadec_folds -psytar data/psytar_folds -entity adr -tagger averaged_perceptron_tagger
 
 python3 statistic.py -cadec data/cadec_folds -psytar data/psytar_folds -stat data/stat.txt
 
