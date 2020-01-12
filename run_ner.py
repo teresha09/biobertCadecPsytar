@@ -68,7 +68,7 @@ flags.DEFINE_bool("use_tpu", False, "Whether to use TPU or GPU/CPU.")
 
 flags.DEFINE_bool("do_eval", False, "Whether to run eval on the dev set.")
 
-flags.DEFINE_bool("do_predict", False, "Whether to run the model in inference mode on the test set.")
+flags.DEFINE_bool("do_predict", True, "Whether to run the model in inference mode on the test set.")
 
 flags.DEFINE_integer("train_batch_size", 32, "Total batch size for training.")
 
@@ -93,8 +93,6 @@ flags.DEFINE_integer("iterations_per_loop", 1000,
 
 tf.flags.DEFINE_string("master", None, "[Optional] TensorFlow master URL.")
 
-tf.flags.DEFINE_string("test_name", "main", "Name for test files")
-
 flags.DEFINE_integer(
     "num_tpu_cores", 8,
     "Only used if `use_tpu` is True. Total number of TPU cores to use.")
@@ -105,7 +103,6 @@ class InputExample(object):
 
     def __init__(self, guid, text, label=None):
         """Constructs a InputExample.
-
         Args:
           guid: Unique id for the example.
           text_a: string. The untokenized text of the first sequence. For single
@@ -591,10 +588,7 @@ def main(_):
                 tf.logging.info("  %s = %s", key, str(result[key]))
                 writer.write("%s = %s\n" % (key, str(result[key])))
     if FLAGS.do_predict:
-        token_path = os.path.join(FLAGS.output_dir, "token_test_"+ FLAGS.test_name + ".txt")
-        print("TOOOOOOOOOOOOOKEN PAAAATHH")
-        print(token_path)
-        print("TOOOOOOOOOOOOOOKEN PAAAATH")
+        token_path = os.path.join(FLAGS.output_dir, "token_test.txt")
         with open(os.path.join(FLAGS.output_dir, 'label2id.pkl'), 'rb') as rf:
             label2id = pickle.load(rf)
             id2label = {value: key for key, value in label2id.items()}
@@ -639,7 +633,7 @@ def main(_):
             tf.logging.info("  %s = %s", key, str(prf[key]))
 
         result = estimator.predict(input_fn=predict_input_fn)
-        output_predict_file = os.path.join(FLAGS.output_dir, "label_test_{}.txt".format(FLAGS.test_name))
+        output_predict_file = os.path.join(FLAGS.output_dir, "label_test.txt")
         output_logits_file = os.path.join(FLAGS.output_dir, "logits_test.txt")
         with open(output_predict_file, 'w') as p_writer:
             with open(output_logits_file, 'w') as l_writer:

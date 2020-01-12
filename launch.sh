@@ -1,5 +1,6 @@
 #!/bin/bash
 TMP_DIR=$1
+BIOBERT_DIR=${SCRIPTPATH}/BIOBERT_DIR
 python3 folds_cadec.py -cadec data/cadec -cadec_text data/cadec/text -cadec_original data/cadec/original -cadec_folds data/cadec_folds -folds 5
 
 python3 folds_psytar.py -psytar data/psytar_folds -psytar_text data/Copy_of_PsyTAR_dataset.csv -psytar_adr data/Copy_of_PsyTAR_dataset_adr.csv -psytar_disease data/Copy_of_PsyTAR_dataset_disease.csv -psytar_symptoms data/Copy_of_PsyTAR_dataset_symptoms.csv -folds 5
@@ -32,27 +33,28 @@ psytararr+=("$fold1")
 done
 done
 mkdir $TMP_DIR
+
 for (( i=0; i < "${#cadecarr[@]}"; i++ ))
 do
 mkdir "${TMP_DIR}/cadec_fold_0${i}_cadec_test"
 outputdir=${TMP_DIR}/cadec_fold_0${i}_cadec_test
-python3 run_ner.py --do_train=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
-    --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
+python3 run_ner.py --do_train=true --do_eval=true --vocab_file=${BIOBERT_DIR}/vocab.txt \
+    --bert_config_file=${BIOBERT_DIR}/bert_config.json \
+    --init_checkpoint=${BIOBERT_DIR}/biobert_model.ckpt \
     --num_train_epochs=50.0 \
     --data_dir="${cadecarr[$i]}" \
     --output_dir=$outputdir
 cp ${TMP_DIR}/cadec_fold_0${i}_cadec_test -R ${TMP_DIR}/cadec_fold_0${i}_psytar_test
 outputdir1=${TMP_DIR}/cadec_fold_0${i}_psytar_test
-python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
-    --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
+python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${BIOBERT_DIR}/vocab.txt \
+    --bert_config_file=${BIOBERT_DIR}/bert_config.json \
+    --init_checkpoint=${BIOBERT_DIR}/biobert_model.ckpt \
     --num_train_epochs=50.0 \
     --data_dir="${cadecarr[$i]}" \
     --output_dir=$outputdir
-python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
-    --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
+python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${BIOBERT_DIR}/vocab.txt \
+    --bert_config_file=${BIOBERT_DIR}/bert_config.json \
+    --init_checkpoint=${BIOBERT_DIR}/biobert_model.ckpt \
     --num_train_epochs=50.0 \
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir1
@@ -87,23 +89,23 @@ for (( i=0; i < "${#psytararr[@]}"; i++ ))
 do
 mkdir "${TMP_DIR}/psytar_fold_0${i}_cadec_test"
 outputdir=${TMP_DIR}/psytar_fold_0${i}_cadec_test
-python3 run_ner.py --do_train=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
-    --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
+python3 run_ner.py --do_train=true --do_eval=true --vocab_file=${BIOBERT_DIR}/vocab.txt \
+    --bert_config_file=${BIOBERT_DIR}/bert_config.json \
+    --init_checkpoint=${BIOBERT_DIR}/biobert_model.ckpt \
     --num_train_epochs=50.0 \
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir
 cp ${TMP_DIR}/psytar_fold_0${i}_cadec_test -R ${TMP_DIR}/psytar_fold_0${i}_psytar_test
 outputdir1=${TMP_DIR}/psytar_fold_0${i}_psytar_test
-python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
-    --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
+python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${BIOBERT_DIR}/vocab.txt \
+    --bert_config_file=${BIOBERT_DIR}/bert_config.json \
+    --init_checkpoint=${BIOBERT_DIR}/biobert_model.ckpt \
     --num_train_epochs=50.0 \
     --data_dir="${cadecarr[$i]}" \
     --output_dir=$outputdir
-python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${SCRIPTPATH}/BIOBERT_DIR/vocab.txt \
-    --bert_config_file=${SCRIPTPATH}/BIOBERT_DIR/bert_config.json \
-    --init_checkpoint=${SCRIPTPATH}/BIOBERT_DIR/biobert_model.ckpt \
+python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_file=${BIOBERT_DIR}/vocab.txt \
+    --bert_config_file=${BIOBERT_DIR}/bert_config.json \
+    --init_checkpoint=${BIOBERT_DIR}/biobert_model.ckpt \
     --num_train_epochs=50.0 \
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir1
@@ -134,5 +136,3 @@ python3 output_working.py -data ${psytararr[$i]}/test.json \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/cadec_fold_0${i}_psytar_test/brat_output
 done
-
-
