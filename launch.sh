@@ -130,7 +130,7 @@ perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir1}/NER_result_conll.txt
 cp ${SCRIPTPATH}/metrics.txt ${outputdir1}/metrics.txt
 rm metrics.txt
 mkdir ${TMP_DIR}/psytar_fold_0${i}_psytar_test/brat_output
-python3 output_working.py -data ${SCRIPTPATH}/data/psytar_folds/0${i}/test.jso \
+python3 output_working.py -data ${SCRIPTPATH}/data/psytar_folds/0${i}/test.json \
 -output_data ${outputdir1}/NER_result_conll.txt \
 -conll ${SCRIPTPATH}/data/psytar_folds/0${i}/test.conll \
 -entity "ADR" \
