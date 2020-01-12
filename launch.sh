@@ -66,9 +66,9 @@ perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir}/NER_result_conll.txt
 cp ${SCRIPTPATH}/metrics.txt ${outputdir}/metrics.txt
 rm metrics.txt
 mkdir ${TMP_DIR}/cadec_fold_0${i}_cadec_test/brat_output
-python3 output_working.py -data ${cadecarr[$i]}/test.json \
+python3 output_working.py -data ${SCRIPTPATH}/data/cadec_folds/0${i}/test.json \
 -output_data ${outputdir}/NER_result_conll.txt \
--conll ${cadecarr[$i]}/test.conll \
+-conll ${SCRIPTPATH}/data/cadec_folds/0${i}/test.conll \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/cadec_fold_0${i}_cadec_test/brat_output
 python3 biocodes_detok.py \
@@ -79,9 +79,9 @@ perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir1}/NER_result_conll.txt
 cp ${SCRIPTPATH}/metrics.txt ${outputdir1}/metrics.txt
 rm metrics.txt
 mkdir ${TMP_DIR}/cadec_fold_0${i}_psytar_test/brat_output
-python3 output_working.py -data ${psytararr[$i]}/test.json \
+python3 output_working.py -data ${SCRIPTPATH}/data/psytar_folds/0${i}/test.json \
 -output_data ${outputdir1}/NER_result_conll.txt \
--conll ${psytararr[$i]}/test.conll \
+-conll ${SCRIPTPATH}/data/psytar_folds/0${i}/test.conll \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/cadec_fold_0${i}_psytar_test/brat_output
 done
@@ -117,9 +117,9 @@ perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir}/NER_result_conll.txt
 cp ${SCRIPTPATH}/metrics.txt ${outputdir}/metrics.txt
 rm metrics.txt
 mkdir ${TMP_DIR}/psytar_fold_0${i}_cadec_test/brat_output
-python3 output_working.py -data ${cadecarr[$i]}/test.json \
+python3 output_working.py -data ${SCRIPTPATH}/data/cadec_folds/0${i}/test.json \
 -output_data ${outputdir}/NER_result_conll.txt \
--conll ${cadecarr[$i]}/test.conll \
+-conll ${SCRIPTPATH}/data/cadec_folds/0${i}/test.conll \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/cadec_fold_0${i}_cadec_test/brat_output
 python3 biocodes_detok.py \
@@ -130,9 +130,9 @@ perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir1}/NER_result_conll.txt
 cp ${SCRIPTPATH}/metrics.txt ${outputdir1}/metrics.txt
 rm metrics.txt
 mkdir ${TMP_DIR}/psytar_fold_0${i}_psytar_test/brat_output
-python3 output_working.py -data ${psytararr[$i]}/test.json \
+python3 output_working.py -data ${SCRIPTPATH}/data/psytar_folds/0${i}/test.jso \
 -output_data ${outputdir1}/NER_result_conll.txt \
--conll ${psytararr[$i]}/test.conll \
+-conll ${SCRIPTPATH}/data/psytar_folds/0${i}/test.conll \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/cadec_fold_0${i}_psytar_test/brat_output
 done
