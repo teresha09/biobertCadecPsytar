@@ -91,7 +91,10 @@ def json_to_conll(corpus_json_location, output_location, entity_type, by_sent = 
             tokens_counter = 0
             for document in documents:
                 tokens = tokenization.make_token_list(document.split(' '),tokenizer)
-                pos_tags = pos_tag(tokens, lang='rus')
+                if args.tagger == "averaged_perceptron_tagger_ru":
+                    pos_tags = pos_tag(tokens, lang='rus')
+                else:
+                    pos_tags = pos_tag(tokens)
                 tokens_counter += len(tokens)
                 for token, temp in zip(tokens, pos_tags):
                     token_corr = temp[0].lower()
