@@ -30,6 +30,7 @@ def get_text(directory):
         text = f.read()
         n_sen = text.count("\n")
         text = text.replace("\n", " ")
+        text = text.replace("%","UNK")
         result.append(text)
         names.append(filename)
         n_s.append(n_sen)

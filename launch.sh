@@ -1,6 +1,5 @@
 #!/bin/bash
 TMP_DIR=$1
-BIOBERT_DIR=${SCRIPTPATH}/BIOBERT_DIR
 python3 folds_cadec.py -cadec data/cadec -cadec_text data/cadec/text -cadec_original data/cadec/original -cadec_folds data/cadec_folds -folds 5
 
 python3 folds_psytar.py -psytar data/psytar_folds -psytar_text data/Copy_of_PsyTAR_dataset.csv -psytar_adr data/Copy_of_PsyTAR_dataset_adr.csv -psytar_disease data/Copy_of_PsyTAR_dataset_disease.csv -psytar_symptoms data/Copy_of_PsyTAR_dataset_symptoms.csv -folds 5
@@ -15,6 +14,7 @@ python3 biobert_conll.py -cadec data/cadec_folds -psytar data/psytar_folds -cade
 cadecarr=()
 psytararr=()
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
+BIOBERT_DIR=${SCRIPTPATH}/BIOBERT_DIR
 IFS=$'\n'
 for directory in ${SCRIPTPATH}/data/cadec_folds_biobert/*
 do

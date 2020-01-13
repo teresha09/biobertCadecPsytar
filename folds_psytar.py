@@ -37,9 +37,9 @@ def get_text(filename):
             continue
         else:
             if row[2] in text:
-                text[row[2]] += row[4] + " "
+                text[row[2]] += row[4].replace("%","UNK") + " "
             else:
-                text[row[2]] = row[4] + " "
+                text[row[2]] = row[4].replace("%","UNK") + " "
             if row[2] in n_sen:
                 n_sen[row[2]] += 1
             else:

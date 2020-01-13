@@ -42,9 +42,9 @@ python3 biocodes_detok.py \
 --save_to=${outputdir}/NER_result_conll.txt
 perl ${SCRIPTPATH}/biocodes/conlleval.pl < ${outputdir}/NER_result_conll.txt
 mkdir ${TMP_DIR}/rus_fold_0${i}_rus_test/brat_output
-python3 output_working.py -data ${cadecarr[$i]}/test.json \
+python3 output_working.py -data ${SCRIPTPATH}/data/rus_folds/0${i}/test.json \
 -output_data ${outputdir}/NER_result_conll.txt \
--conll ${cadecarr[$i]}/test.conll \
+-conll ${SCRIPTPATH}/data/rus_folds/0${i}/test.conll \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/rus_fold_0${i}_rus_test/brat_output
 done
