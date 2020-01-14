@@ -126,7 +126,6 @@ while (<STDIN>) {
 #  ($correct,$correctType) = split(/-/,pop(@features));
    $guessedType = $guessedType ? $guessedType : "";
    $correctType = $correctType ? $correctType : "";
-   printf $features[0];
    $firstItem = shift(@features);
    # 1999-06-26 sentence breaks should always be counted as out of chunk
    if ( $firstItem eq $boundary ) { $guessed = "O"; }
