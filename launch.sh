@@ -33,7 +33,6 @@ psytararr+=("$fold1")
 done
 done
 mkdir $TMP_DIR
-
 for (( i=0; i < "${#cadecarr[@]}"; i++ ))
 do
 mkdir "${TMP_DIR}/cadec_fold_0${i}_cadec_test"
@@ -59,6 +58,7 @@ python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_fil
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir1
 python3 biocodes_detok.py \
+--golden_path=${cadecarr[$i]}/test.tsv \
 --tokens=${outputdir}/token_test.txt \
 --labels=${outputdir}/label_test.txt \
 --save_to=${outputdir}/NER_result_conll.txt
@@ -72,6 +72,7 @@ python3 output_working.py -data ${SCRIPTPATH}/data/cadec_folds/0${i}/test.json \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/cadec_fold_0${i}_cadec_test/brat_output
 python3 biocodes_detok.py \
+--golden_path=${psytararr[$i]}/test.tsv \
 --tokens=${outputdir1}/token_test.txt \
 --labels=${outputdir1}/label_test.txt \
 --save_to=${outputdir1}/NER_result_conll.txt
@@ -110,6 +111,7 @@ python3 run_ner.py --do_train=false --do_predict=true --do_eval=true --vocab_fil
     --data_dir="${psytararr[$i]}" \
     --output_dir=$outputdir1
 python3 biocodes_detok.py \
+--golden_path=${cadecarr[$i]}/test.tsv \
 --tokens=${outputdir}/token_test.txt \
 --labels=${outputdir}/label_test.txt \
 --save_to=${outputdir}/NER_result_conll.txt
@@ -123,6 +125,7 @@ python3 output_working.py -data ${SCRIPTPATH}/data/cadec_folds/0${i}/test.json \
 -entity "ADR" \
 -brat_folder ${TMP_DIR}/cadec_fold_0${i}_cadec_test/brat_output
 python3 biocodes_detok.py \
+--golden_path=${psytararr[$i]}/test.tsv \
 --tokens=${outputdir1}/token_test.txt \
 --labels=${outputdir1}/label_test.txt \
 --save_to=${outputdir1}/NER_result_conll.txt

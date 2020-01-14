@@ -26,7 +26,6 @@ def to_IOB_format(filename, out_file):
             f1.write('\n')
             continue
         if len(tokens) < 3:
-            print(line)
             continue
         if tokens[3] == '0':
             tokens[3] = 'O'

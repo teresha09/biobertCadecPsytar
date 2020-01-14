@@ -83,7 +83,6 @@ entity_dict = make_entity_dictionary(ent_slice,len_dataset)
 number = 0
 for i in list(entity_dict):
     df = df.append({'filename':names[i], 'text': text[i], 'sentences': n_s[i], 'entities':entity_dict[i]}, ignore_index=True)
-print(df)
 
 rkf = KFold(n_splits=n_folds)
 

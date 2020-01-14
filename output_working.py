@@ -22,7 +22,7 @@ def annotation_builder(output_string,out_file):
     for word in words:
         if word == '':
             continue
-        if word.split(" ")[1] == "B-MISC":
+        if word.split(" ")[2] == "B-MISC":
             if in_flag:
                 ann_file.write("{}{}\t{}\n".format(s, end, s1[:-1]))
                 s = ""
@@ -71,7 +71,6 @@ while index < len(output_list):
         token_counter += 1
         line1_list = conll_list[index1].split("\t")
         review_string += output_list[index][:-1] + " " + line1_list[4] + " " + line1_list[5] + "\n"
-        print(review_string)
         index += 1
         index1 += 1
     if token_counter == js_data[i]['n_token']:
