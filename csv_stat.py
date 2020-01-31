@@ -10,7 +10,7 @@ temp_file = open(os.path.join("data", "temporary.csv"), "a+")
 temp_file.write("corpus,file,entity,number tokens,number_entities,prediction psytar,prediction cadec\n")
 for dir in os.listdir(dirs):
     brat_folder = os.path.join(os.path.join(dirs,dir), "brat_output")
-    if not os.path.isdir(dir):
+    if not os.path.isdir(os.path.join(dirs,dir)):
         continue
     corpus = dir.split("_")[3]
     flag_pred = True if dir.split("_")[0] == "cadec" else False
