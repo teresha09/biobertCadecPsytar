@@ -123,7 +123,7 @@ python3 output_working.py -data ${SCRIPTPATH}/data/cadec_folds/0${i}/test.json \
 -output_data ${outputdir}/NER_result_conll.txt \
 -conll ${SCRIPTPATH}/data/cadec_folds/0${i}/test.conll \
 -entity "ADR" \
--brat_folder ${TMP_DIR}/cadec_fold_0${i}_cadec_test/brat_output
+-brat_folder ${TMP_DIR}/psytar_fold_0${i}_cadec_test/brat_output
 python3 biocodes_detok.py \
 --golden_path=${psytararr[$i]}/test.tsv \
 --tokens=${outputdir1}/token_test.txt \
@@ -137,5 +137,5 @@ python3 output_working.py -data ${SCRIPTPATH}/data/psytar_folds/0${i}/test.json 
 -output_data ${outputdir1}/NER_result_conll.txt \
 -conll ${SCRIPTPATH}/data/psytar_folds/0${i}/test.conll \
 -entity "ADR" \
--brat_folder ${TMP_DIR}/cadec_fold_0${i}_psytar_test/brat_output
+-brat_folder ${TMP_DIR}/psytar_fold_0${i}_psytar_test/brat_output
 done

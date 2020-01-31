@@ -12,15 +12,16 @@ import argparse
 import tokenization
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--cadec', '-cadec', type=str, default='data/rus_folds')
+parser.add_argument('--cadec', '-cadec', type=str, default='data/cadec_folds')
 parser.add_argument('--psytar', '-psytar', type=str, default=None)
-parser.add_argument('--entity', '-entity', type=str, default='adr')
-parser.add_argument('--tagger', '-tagger', type=str, default='averaged_perceptron_tagger_ru')
+parser.add_argument('--entity', '-entity', type=str, default='adr drug')
+parser.add_argument('--tagger', '-tagger', type=str, default='averaged_perceptron_tagger')
 parser.add_argument('--vocab_file', '-vocab_file', type=str, default='BIOBERT_DIR/vocab.txt')
 parser.add_argument('--do_lower_case', '-do_lower_case', type=bool, default=True)
 
 args = parser.parse_args()
 nltk.download(args.tagger)
+nltk.download('wordnet')
 cadec_folds = args.cadec
 psytar_folds = args.psytar
 entity_type = args.entity
@@ -61,12 +62,12 @@ def get_bio_tag(w_start, w_end, entities, entity_type):
         except Exception:
             raise Exception("Entity start and end must be an integer")
 
-        if entity['entity'] == entity_type:
+        if entity['entity'] in entity_type:
             if w_start > start and w_end <= end:
-                adding = entity_type
+                adding = entity['entity']
                 return 'I-' + adding
             elif w_start == start and w_end <= end:
-                adding = entity_type
+                adding = entity['entity']
                 return 'B-' + adding
     return '0'
 

@@ -3,12 +3,13 @@ import json
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--data", "-data",type=str,default="data/cadec_folds/00/test.json")
-parser.add_argument("--output_data", "-output_data", type=str, default="data/cadec_folds/00/NER_result_conll.txt")
-parser.add_argument("--conll", "-conll", type=str, default="data/cadec_folds/00/test.conll")
+parser.add_argument("--data", "-data",type=str,default="data/psytar_folds/01/test.json")
+parser.add_argument("--output_data", "-output_data", type=str, default="tmp/cadec_fold_01_psytar_test/NER_result_conll1.txt")
+parser.add_argument("--conll", "-conll", type=str, default="data/psytar_folds/01/test.conll")
 parser.add_argument("--entity", "-entity", type=str, default="ADR")
 parser.add_argument("--brat_folder", "-brat_folder", type=str, default="brat_output/00")
 args = parser.parse_args()
+print(args)
 
 
 def annotation_builder(output_string,out_file):
@@ -31,7 +32,7 @@ def annotation_builder(output_string,out_file):
             entity_counter += 1
             start = word.split(" ")[-2]
             s = "T{}\t{} {} ".format(entity_counter, args.entity, start)
-        if word.split(" ")[1] == "O-MISC" and in_flag:
+        if word.split(" ")[2] == "O-MISC" and in_flag:
             ann_file.write("{}{}\t{}\n".format(s, end, s1[:-1]))
             in_flag = False
             s = ""
@@ -75,7 +76,7 @@ while index < len(output_list):
         index1 += 1
     if token_counter == js_data[i]['n_token']:
         token_counter = 0
-        out_file = os.path.join(args.brat_folder, js_data[i]['filename'][:-3] + "ann")
+        out_file = os.path.join(args.brat_folder, js_data[i]['filename'])
         annotation_builder(review_string,out_file)
         review_string = ""
         i += 1

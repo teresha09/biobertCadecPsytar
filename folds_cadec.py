@@ -34,7 +34,9 @@ def get_entity_and_slice(directory):
             words = sentence.split(" ")
             if words[0][0] == "#":
                 continue
-            rev.append(words[1:5])
+            ent = words[1:4]
+            ent.append(elem.split("\t")[-1])
+            rev.append(ent)
         result.append(rev)
     return result
 
@@ -49,9 +51,8 @@ def get_text(directory):
         text = f.read()
         n_sen = text.count("\n")
         text = text.replace("\n", " ")
-        text = text.replace("%","UNK")
         result.append(text)
-        names.append(filename)
+        names.append(filename[:-4])
         n_s.append(n_sen)
         f.close()
     return result, names, n_s
