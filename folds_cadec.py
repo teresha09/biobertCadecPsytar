@@ -51,6 +51,7 @@ def get_text(directory):
         text = f.read()
         n_sen = text.count("\n")
         text = text.replace("\n", " ")
+        text = text.lower()
         result.append(text)
         names.append(filename[:-4])
         n_s.append(n_sen)

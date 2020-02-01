@@ -66,9 +66,9 @@ def get_adr_entity(filename, full_text):
                 start = full_text[row[1]].find(col)
                 end = start + len(col)
                 if row[1] in text:
-                    text[row[1]].append({'start': start, 'end': end, 'entity': 'adr', 'text': col})
+                    text[row[1]].append({'start': start, 'end': end, 'entity': 'adr', 'text': col.lower()})
                 else:
-                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'adr', 'text': col}]
+                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'adr', 'text': col.lower()}]
     return text
 
 
@@ -89,9 +89,9 @@ def get_disease_entity(filename, full_text):
                 start = full_text[row[1]].find(col)
                 end = start + len(col)
                 if row[1] in text:
-                    text[row[1]].append({'start': start, 'end': end, 'entity': 'disease', 'text': col})
+                    text[row[1]].append({'start': start, 'end': end, 'entity': 'disease', 'text': col.lower()})
                 else:
-                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'disease', 'text': col}]
+                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'disease', 'text': col.lower()}]
     return text
 
 
@@ -112,9 +112,9 @@ def get_symptom_entity(filename, full_text):
                 start = full_text[row[1]].find(col)
                 end = start + len(col)
                 if row[1] in text:
-                    text[row[1]].append({'start': start, 'end': end, 'entity': 'symptom', 'text': col})
+                    text[row[1]].append({'start': start, 'end': end, 'entity': 'symptom', 'text': col.lower()})
                 else:
-                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'symptom', 'text': col}]
+                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'symptom', 'text': col.lower()}]
     return text
 
 
@@ -153,7 +153,7 @@ for key in text:
 
 
 for key in text:
-    df = df.append({'filename':key,'text': text[key], 'sentences':n_sentences[key] , 'entities': entity_dict[key]}, ignore_index=True)
+    df = df.append({'filename':key,'text': text[key].lower(), 'sentences':n_sentences[key] , 'entities': entity_dict[key]}, ignore_index=True)
 
 
 rkf = KFold(n_splits=n_folds)
