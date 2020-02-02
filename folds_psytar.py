@@ -37,9 +37,9 @@ def get_text(filename):
             continue
         else:
             if row[2] in text:
-                text[row[2]] += row[4].replace("\n",'') + " "
+                text[row[2]] += row[4].replace("\n",'').lower() + " "
             else:
-                text[row[2]] = row[4].replace("\n", '') + " "
+                text[row[2]] = row[4].replace("\n", '').lower() + " "
             if row[2] in n_sen:
                 n_sen[row[2]] += 1
             else:
@@ -56,19 +56,42 @@ def get_adr_entity(filename, full_text):
     line = 0
     s = 0
     for row in csv_reader:
+        if row[1] == "lexapro.43":
+            print("debug")
         if line == 0:
             line += 1
             continue
         else:
             for col in row[4:]:
+                col = col.lower()
                 if col == '':
                     break
-                start = full_text[row[1]].find(col)
-                end = start + len(col)
+                length = len(col)
+                copy_col = col
+                copy_col1 =col
+                while len(copy_col) > 0:
+                    start = full_text[row[1]].find(copy_col)
+                    if start == -1:
+                        if copy_col.rfind(" ") == -1:
+                            break
+                        copy_col = copy_col[:copy_col.rfind(" ")]
+                    else:
+                        break
+                while len(copy_col1) > 0:
+                    end = full_text[row[1]].find(copy_col1)
+                    if end == -1:
+                        if copy_col1.find(" ") == -1:
+                            break
+                        copy_col1 = copy_col1[copy_col1.find(" ")+1:]
+                    else:
+                        break
+                if start == -1 or end == -1:
+                    continue
+                end = end + len(copy_col1)
                 if row[1] in text:
-                    text[row[1]].append({'start': start, 'end': end, 'entity': 'adr', 'text': col.lower()})
+                    text[row[1]].append({'start': start, 'end': end, 'entity': 'adr', 'text': col})
                 else:
-                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'adr', 'text': col.lower()}]
+                    text[row[1]] = [{'start': start, 'end': end, 'entity': 'adr', 'text': col}]
     return text
 
 
@@ -84,10 +107,31 @@ def get_disease_entity(filename, full_text):
             continue
         else:
             for col in row[4:]:
+                col = col.lower()
                 if col == '':
                     break
-                start = full_text[row[1]].find(col)
-                end = start + len(col)
+                length = len(col)
+                copy_col = col
+                copy_col1 = col
+                while len(copy_col) > 0:
+                    start = full_text[row[1]].find(copy_col)
+                    if start == -1:
+                        if copy_col.rfind(" ") == -1:
+                            break
+                        copy_col = copy_col[:copy_col.rfind(" ")]
+                    else:
+                        break
+                while len(copy_col1) > 0:
+                    end = full_text[row[1]].find(copy_col1)
+                    if end == -1:
+                        if copy_col1.find(" ") == -1:
+                            break
+                        copy_col1 = copy_col1[copy_col1.find(" ") + 1:]
+                    else:
+                        break
+                if start == -1 or end == -1:
+                    continue
+                end = end + len(copy_col1)
                 if row[1] in text:
                     text[row[1]].append({'start': start, 'end': end, 'entity': 'disease', 'text': col.lower()})
                 else:
@@ -102,15 +146,38 @@ def get_symptom_entity(filename, full_text):
     line = 0
     s = 0
     for row in csv_reader:
+        if row[1] == "lexapro.43":
+            print("debug")
         if line == 0:
             line += 1
             continue
         else:
             for col in row[4:]:
+                col = col.lower()
                 if col == '':
                     break
-                start = full_text[row[1]].find(col)
-                end = start + len(col)
+                length = len(col)
+                copy_col = col
+                copy_col1 = col
+                while len(copy_col) > 0:
+                    start = full_text[row[1]].find(copy_col)
+                    if start == -1:
+                        if copy_col.rfind(" ") == -1:
+                            break
+                        copy_col = copy_col[:copy_col.rfind(" ")]
+                    else:
+                        break
+                while len(copy_col1) > 0:
+                    end = full_text[row[1]].find(copy_col1)
+                    if end == -1:
+                        if copy_col1.find(" ") == -1:
+                            break
+                        copy_col1 = copy_col1[copy_col1.find(" ") + 1:]
+                    else:
+                        break
+                if start == -1 or end == -1:
+                    continue
+                end = end + len(copy_col1)
                 if row[1] in text:
                     text[row[1]].append({'start': start, 'end': end, 'entity': 'symptom', 'text': col.lower()})
                 else:
@@ -153,7 +220,7 @@ for key in text:
 
 
 for key in text:
-    df = df.append({'filename':key,'text': text[key].lower(), 'sentences':n_sentences[key] , 'entities': entity_dict[key]}, ignore_index=True)
+    df = df.append({'filename':key,'text': text[key], 'sentences':n_sentences[key] , 'entities': entity_dict[key]}, ignore_index=True)
 
 
 rkf = KFold(n_splits=n_folds)
