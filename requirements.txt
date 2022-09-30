@@ -10,7 +10,7 @@ pandas==0.23
 # Please refer https://github.com/BioASQ/Evaluation-Measures for details.
 
 chardet==3.0.4
-joblib==0.14.0
+joblib==1.2.0
 nltk==3.4.5
 numpy==1.17.4
 python-dateutil==2.8.1
